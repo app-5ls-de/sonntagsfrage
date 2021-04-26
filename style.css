@@ -47,3 +47,12 @@ body,
     transform: translate3d(-50%, -50%, 0);
     will-change: transform;
 }
+
+#date {
+    text-align: center;
+}
+
+#container {
+    max-width: 70vw;
+    margin: auto;
+}

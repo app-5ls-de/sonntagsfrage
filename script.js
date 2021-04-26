@@ -53,23 +53,25 @@ f("https://api.sonntagsfrage.app.5ls.de/", (data) => {
     let latest = data.history[0];
 
 
-    const config = {
+    let config = {
         type: 'doughnut',
         data: {
             labels: [],
             datasets: [
                 {
-                    label: '# of Votes',
+                    label: 'Sonntagsfrage',
                     data: [],
                     backgroundColor: [],
                     borderColor: "#fff",
-                    borderWidth: 5
+                    borderWidth: 5,
                 }
             ]
         },
         options: {
             rotation: -90,
             circumference: 180,
+            hoverOffset: 4,
+            clip: {left: 50, top: false, right: -2, bottom: 0}
         }
     };
 
@@ -86,5 +88,64 @@ f("https://api.sonntagsfrage.app.5ls.de/", (data) => {
         }
     }
 
-    var myChart = new Chart(document.getElementById('half_doughnut').getContext('2d'), config);
+    new Chart(document.getElementById('half_doughnut').getContext('2d'), config);
+    document.getElementById('date').innerText = latest.date
+
+
+
+    /* ------ */
+
+
+
+    config = {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: []
+        },
+        plugins: {  
+            tooltip: {
+              mode: 'index'
+            },
+          },
+        options: {
+            responsive: true,
+        },
+    };
+
+
+    let datasets = {}
+    for (const party in data.parties) {
+        if (Object.hasOwnProperty.call(data.parties, party)) {
+            datasets[party] = {
+                label: party,
+                data: [],
+                backgroundColor: data.parties[party].color,
+                borderColor: "#fff",
+                cubicInterpolationMode: "monotone",
+                showLine: true
+            }
+        }
+    }
+
+    data.history.reverse().forEach(element => {
+        config.data.labels.push(element.date)
+
+
+        for (const party in element.parties) {
+            if (Object.hasOwnProperty.call(element.parties, party)) {
+                datasets[party].data.push(element.parties[party])
+            }
+        }
+    });
+
+
+    for (const party in datasets) {
+        if (Object.hasOwnProperty.call(datasets, party)) {
+            config.data.datasets.push(datasets[party])
+        }
+    }
+    new Chart(document.getElementById('history').getContext('2d'), config);
+
+
 });
