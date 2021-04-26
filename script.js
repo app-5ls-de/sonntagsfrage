@@ -47,7 +47,7 @@ function f(url, callback) {
 let div_container = document.getElementById("container");
 
 
-f("https://api.wahl.app.5ls.de/", (data) => {
+f("https://api.sonntagsfrage.app.5ls.de/", (data) => {
     document.getElementById("spinner").style.display = "None";
 
     let latest = data.history[0];
