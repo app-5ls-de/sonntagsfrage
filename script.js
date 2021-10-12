@@ -45,9 +45,10 @@ function f(url, callback) {
 
 
 let div_container = document.getElementById("container");
+let url = "https://api.app.5ls.de/api/sonntagsfrage/history"
+url = "https://gist.githubusercontent.com/PatrickHaussmann/95683eda3c14356cc772e4b01886f162/raw/7033e9de05d142ce826a0e5aaa17002bffd7a5b6/sonntagsfrage.json"
 
-
-f("https://api.sonntagsfrage.app.5ls.de/", (data) => {
+f(url, (data) => {
     document.getElementById("spinner").style.display = "None";
 
     let latest = data.history[0];
@@ -149,3 +150,8 @@ f("https://api.sonntagsfrage.app.5ls.de/", (data) => {
 
 
 });
+
+
+var draw = SVG().addTo('#koalition').size(100,30)
+var rect = draw.rect(33,30).attr({ fill: '#f06' })
+var rect2 = draw.rect("14%","100%").attr({ fill: '#c5f' })
